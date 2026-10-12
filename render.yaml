@@ -1,10 +1,12 @@
 services:
   - type: web
     name: campusiq-ai
-    env: node
+    runtime: node
     plan: free
+    region: oregon
     buildCommand: npm install && npm run build
     startCommand: npm run start
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production

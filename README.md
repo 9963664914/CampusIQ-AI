@@ -2,6 +2,8 @@
 
 > **Tagline:** *Smarter Insights. Brighter Futures.*
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/9963664914/CampusIQ-AI)
+
 [![Platform Status](https://img.shields.io/badge/Platform-Online%20v2.5.0-success)](#)
 [![Stack](https://img.shields.io/badge/Stack-Node.js%20%7C%20React%20%7C%20TypeScript%20%7C%20Tailwind-blue)](#)
 [![AI Engine](https://img.shields.io/badge/AI%20Engine-Gemini%201.5%20%2B%20EduPulse%20Adaptive-purple)](#)
