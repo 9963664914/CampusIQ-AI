@@ -1,6 +1,12 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import {
   USERS,
   STUDENTS,
@@ -751,6 +757,21 @@ app.post('/api/settings/privacy', (req: Request, res: Response) => {
   PRIVACY_SETTINGS = { ...PRIVACY_SETTINGS, ...req.body };
   res.json({ success: true, settings: PRIVACY_SETTINGS });
 });
+
+// ==========================================
+// 16. PRODUCTION STATIC ASSETS SERVING
+// ==========================================
+const distPath = path.resolve(__dirname, '../dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  // Express 5 catch-all fallback for SPA client-side routing
+  app.use((req: Request, res: Response) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ error: 'API endpoint not found' });
+    }
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 // Start Express Server
 app.listen(PORT, () => {
