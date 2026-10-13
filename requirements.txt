@@ -2,3 +2,4 @@ Django==6.1.2
 pandas==3.0.6
 numpy==2.5.4
 python-dotenv==1.1.1
+gunicorn==23.0.0
