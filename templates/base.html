@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CampusIQ AI{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a href="{% url 'dashboard' %}" class="brand">CampusIQ AI</a>
+            <nav>
+                <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+                <a href="{% url 'student_directory' %}" class="{% if request.resolver_match.url_name == 'student_directory' %}active{% endif %}">Student Directory</a>
+                <a href="{% url 'risk_analysis' %}" class="{% if request.resolver_match.url_name == 'risk_analysis' %}active{% endif %}">Risk Analysis</a>
+                <a href="{% url 'segmentation' %}" class="{% if request.resolver_match.url_name == 'segmentation' %}active{% endif %}">Student Segmentation</a>
+                <a href="{% url 'upload_data' %}" class="{% if request.resolver_match.url_name == 'upload_data' %}active{% endif %}">Data Upload</a>
+                <a href="{% url 'methodology' %}" class="{% if request.resolver_match.url_name == 'methodology' %}active{% endif %}">Scoring Methodology</a>
+                <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About CampusIQ AI</a>
+                <a href="/admin/">Admin</a>
+            </nav>
+            {% if user.is_authenticated %}
+            <div class="user-panel">
+                <div class="user-welcome">Signed in as {{ user.username }}</div>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+            {% endif %}
+        </aside>
+        <main class="main">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

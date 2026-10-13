@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Segmentation | CampusIQ AI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="muted">Explainable segmentation</p>
+        <h1>Student Segmentation</h1>
+    </div>
+</div>
+
+{% if segment_summary %}
+    {% for segment in segment_summary %}
+        <div class="section-card">
+            <h3>{{ segment.name }}</h3>
+            <p><strong>Students:</strong> {{ segment.count }}</p>
+            <p>{{ segment.definition }}</p>
+            <p><strong>Applicable indicators:</strong> {{ segment.indicators|join:', ' }}</p>
+            <p><strong>Recommended next steps:</strong> {{ segment.next_steps }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="section-card">
+        <p class="muted">No student segments are currently active for the selected data.</p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,3 @@
+student_id,name,department,academic_year,attendance,academic_score,exam_average,lms_engagement,placement_readiness,technical_skills,aptitude_score,communication_score,soft_skills,engagement_score,feedback_score,previous_score,previous_attendance,placement_status
+S2001,Student One,CSE,2025,87,83,85,75,78,80,72,77,74,80,76,80,84,Placed
+S2002,Student Two,ECE,2025,69,58,60,52,57,60,54,61,56,63,58,60,72,Active

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Risk Analysis | CampusIQ AI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="muted">Explainable risk review</p>
+        <h1>Risk Analysis</h1>
+    </div>
+</div>
+
+<div class="section-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Academic</th>
+                <th>Placement</th>
+                <th>Incomplete data</th>
+                <th>Reasons</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in rows %}
+                <tr>
+                    <td><a href="{% url 'student_detail' item.student.student_id %}">{{ item.student.student_id }}</a></td>
+                    <td>{% if item.risk_flags %}{% for flag in item.risk_flags %}{% if flag.type == 'academic' %}<span class="badge {{ flag.level }}">{{ flag.level }}</span>{% endif %}{% endfor %}{% else %}<span class="badge low">low</span>{% endif %}</td>
+                    <td>{% if item.risk_flags %}{% for flag in item.risk_flags %}{% if flag.type == 'placement' %}<span class="badge {{ flag.level }}">{{ flag.level }}</span>{% endif %}{% endfor %}{% else %}<span class="badge low">low</span>{% endif %}</td>
+                    <td>{% if item.risk_flags %}{% for flag in item.risk_flags %}{% if flag.type == 'incomplete' %}<span class="badge incomplete">warning</span>{% endif %}{% endfor %}{% else %}<span class="badge low">low</span>{% endif %}</td>
+                    <td>{% for flag in item.risk_flags %}{{ flag.message }}<br>{% empty %}No active risk indicators.{% endfor %}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="5">No students available for risk assessment.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

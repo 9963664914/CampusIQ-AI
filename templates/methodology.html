@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Scoring Methodology | CampusIQ AI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="muted">Transparent methodology</p>
+        <h1>Scoring Methodology</h1>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>Prototype score formula</h3>
+    <p>Student Success Score = sum(component score × component weight) / sum(weights of eligible components)</p>
+    <p>The illustrative prototype weights are:</p>
+    <ul>
+        <li>Academic performance: 30%</li>
+        <li>Attendance: 20%</li>
+        <li>LMS engagement: 15%</li>
+        <li>Placement readiness: 15%</li>
+        <li>Skills: 10%</li>
+        <li>Engagement and feedback: 10%</li>
+    </ul>
+    <p>Each component is normalized to a 0–100 scale and rounded to one decimal place in the display. If a component is missing, the remaining weights are renormalized so the score remains functional without assigning zero merely because data is absent.</p>
+</div>
+
+<div class="section-card">
+    <h3>Risk thresholds</h3>
+    <ul>
+        <li>Attendance below 75% triggers an academic warning.</li>
+        <li>Academic performance below 60 triggers a support recommendation.</li>
+        <li>Placement-readiness indicators below 60 trigger placement support.</li>
+        <li>Low coverage or missing critical fields triggers an incomplete-data warning.</li>
+    </ul>
+</div>
+
+<div class="section-card">
+    <h3>Explainability rules</h3>
+    <p>Every score and recommendation is derived from stored data and each risk rule is displayed with the actual evidence used in the evaluation. The system is designed to support human review and intervention, not to make high-impact academic or placement decisions automatically.</p>
+</div>
+{% endblock %}

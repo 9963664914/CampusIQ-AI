@@ -1,0 +1,12 @@
+student_id,name,department,academic_year,attendance,academic_score,exam_average,lms_engagement,placement_readiness,technical_skills,aptitude_score,communication_score,soft_skills,engagement_score,feedback_score,previous_score,previous_attendance,placement_status
+S1001,Aarthi Reddy,CSE,2025,89,82,84,76,74,80,71,78,72,77,74,79,84,Placed
+S1002,Bhavana Nair,EEE,2025,68,54,57,63,58,62,49,60,58,65,61,61,70,Active
+S1003,Chandana Rao,CSE,2024,91,88,90,82,81,84,79,80,76,78,82,85,88,Placed
+S1004,Deepthi Varma,ECE,2025,73,61,63,55,62,72,58,67,60,68,64,63,74,In-Progress
+S1005,Harika Sree,MECH,2025,61,49,51,44,46,52,45,53,48,55,52,58,62,Not started
+S1006,Jahnavi Sai,CSE,2024,94,92,94,88,86,91,84,87,82,86,88,90,95,Placed
+S1007,Kavya Rani,IT,2025,81,76,78,73,69,75,67,72,71,70,68,73,80,In-Progress
+S1008,Mounica Priya,EEE,2025,66,52,54,48,50,58,46,56,55,60,59,60,68,Active
+S1009,Nandini Sharma,ECE,2024,88,84,86,80,75,83,73,78,76,80,79,81,86,Placed
+S1010,Pranavi Iyer,IT,2025,58,47,49,38,44,50,41,52,49,54,48,54,60,Not started
+S1011,Ramyasri T,CSE,2025,90,86,88,84,80,82,75,79,77,81,82,84,87,Placed

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}CSV Upload | CampusIQ AI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="muted">Data integration</p>
+        <h1>Upload student data</h1>
+    </div>
+    <a class="btn btn-secondary" href="{% url 'download_template' %}">Download CSV template</a>
+</div>
+
+<div class="section-card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn" type="submit">Import CSV</button>
+    </form>
+</div>
+
+{% if summary %}
+<div class="section-card">
+    <h3>Import summary</h3>
+    <p><strong>Imported:</strong> {{ summary.imported }}</p>
+    <p><strong>Updated:</strong> {{ summary.updated }}</p>
+    <p><strong>Rejected:</strong> {{ summary.rejected }}</p>
+    {% if summary.duplicate_ids %}
+        <p><strong>Duplicate IDs:</strong> {{ summary.duplicate_ids|join:', ' }}</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

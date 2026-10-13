@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | CampusIQ AI{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="muted">Smart Campus Analytics</p>
+        <h1>Dashboard</h1>
+    </div>
+    <a class="btn btn-secondary" href="{% url 'upload_data' %}">Upload CSV</a>
+</div>
+
+<form method="get" class="section-card">
+    <div class="form-row">
+        <div class="form-field">
+            <label for="q">Search student</label>
+            <input class="form-control" id="q" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Student ID or name">
+        </div>
+        <div class="form-field">
+            <label for="department">Department</label>
+            <select id="department" name="department" class="form-control">
+                <option value="">All departments</option>
+                {% for value in department_choices %}
+                    <option value="{{ value }}" {% if request.GET.department == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="academic_year">Academic year</label>
+            <select id="academic_year" name="academic_year" class="form-control">
+                <option value="">All years</option>
+                {% for value in academic_year_choices %}
+                    <option value="{{ value }}" {% if request.GET.academic_year == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-field">
+            <button class="btn" type="submit">Apply filters</button>
+        </div>
+    </div>
+</form>
+
+<div class="kpis">
+    <div class="kpi-card">
+        <div class="kpi-label">Total students</div>
+        <p class="kpi-value">{{ totals.total_students }}</p>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">Average Student Success Score</div>
+        <p class="kpi-value">{{ totals.average_score }}</p>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">Students requiring academic support</div>
+        <p class="kpi-value">{{ totals.academic_support }}</p>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">Students requiring placement support</div>
+        <p class="kpi-value">{{ totals.placement_support }}</p>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-label">Students with incomplete data</div>
+        <p class="kpi-value">{{ totals.incomplete_students }}</p>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>Student Success Score distribution</h3>
+    <div class="chart-box">
+        <canvas id="scoreChart"></canvas>
+    </div>
+</div>
+
+<div class="section-card">
+    <h3>Student segments</h3>
+    {% if segment_counts %}
+        <ul>
+            {% for segment in segment_counts %}
+                <li><strong>{{ segment.name }}</strong> — {{ segment.count }} students</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="muted">No segments were flagged for the selected filters.</p>
+    {% endif %}
+</div>
+
+<div class="section-card">
+    <h3>Recent student records</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Year</th>
+                <th>Success Score</th>
+                <th>Academic Risk</th>
+                <th>Placement Risk</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                {% with summary=student.score %}
+                <tr>
+                    <td><a href="{% url 'student_detail' student.student_id %}">{{ student.student_id }}</a></td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.department }}</td>
+                    <td>{{ student.academic_year }}</td>
+                    <td>{{ student.score|floatformat:1 }}</td>
+                    <td><span class="badge {% if student.academic_risk %}{{ student.academic_risk }}{% else %}low{% endif %}">{{ student.academic_risk|default:'low' }}</span></td>
+                    <td><span class="badge {% if student.placement_risk %}{{ student.placement_risk }}{% else %}low{% endif %}">{{ student.placement_risk|default:'low' }}</span></td>
+                </tr>
+                {% endwith %}
+            {% empty %}
+                <tr><td colspan="7">No students match the current filters.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{{ score_labels|json_script:'score-labels' }}
+{{ score_data|json_script:'score-data' }}
+<script>
+const scoreLabels = JSON.parse(document.getElementById('score-labels').textContent);
+const scoreData = JSON.parse(document.getElementById('score-data').textContent);
+
+new Chart(document.getElementById('scoreChart'), {
+    type: 'bar',
+    data: {
+        labels: scoreLabels,
+        datasets: [{
+            label: 'Students',
+            data: scoreData,
+            backgroundColor: ['#dbeafe', '#bfdbfe', '#93c5fd', '#60a5fa', '#2563eb']
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+    }
+});
+</script>
+{% endblock %}
